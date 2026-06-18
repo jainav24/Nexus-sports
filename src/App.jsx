@@ -15,6 +15,7 @@ const Contact = React.lazy(() => import('./pages/Contact'));
 const Cart = React.lazy(() => import('./pages/Cart'));
 const Wishlist = React.lazy(() => import('./pages/Wishlist'));
 const Account = React.lazy(() => import('./pages/Account'));
+const Checkout = React.lazy(() => import('./pages/Checkout'));
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -32,7 +33,7 @@ const App = () => {
     // Simulate initial loading sequence
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2500);
+    }, 1800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -53,6 +54,7 @@ const App = () => {
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/checkout" element={<Checkout />} />
                 <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/account" element={<Account />} />
               </Routes>

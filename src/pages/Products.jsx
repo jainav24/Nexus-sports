@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Search, Filter, X } from 'lucide-react';
+import { Search, SlidersHorizontal, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from '../components/ProductCard';
 import { products as allProducts } from '../data/mockData';
@@ -14,67 +14,69 @@ const Products = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(initialCategory.toLowerCase() === 'all' ? 'All' : initialCategory);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
 
   const categories = ['All', 'Football', 'Basketball', 'Running', 'Training'];
 
   useEffect(() => {
     let filtered = allProducts;
-    
     if (selectedCategory !== 'All') {
       filtered = filtered.filter(p => p.category.toLowerCase() === selectedCategory.toLowerCase());
     }
-
     if (searchQuery) {
       filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
     }
-
     setProducts(filtered);
   }, [searchQuery, selectedCategory]);
 
   return (
     <div className="pt-24 pb-16 min-h-screen">
-      <div className="container mx-auto px-4 md:px-8">
-        
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 border-b border-white/10 pb-8 gap-4">
+      <div className="container mx-auto px-5 md:px-8">
+
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 border-b border-black/[0.06] pb-8 gap-4">
           <div>
-            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mb-2">
+            <h1 className="font-display text-3xl md:text-4xl font-bold tracking-tight text-heading mb-1.5">
               {selectedCategory === 'All' ? 'All Products' : selectedCategory}
             </h1>
-            <p className="text-gray-400">Showing {products.length} results</p>
+            <p className="text-muted text-sm">{products.length} results</p>
           </div>
-          
-          <div className="flex w-full md:w-auto gap-4">
-            <div className="relative w-full md:w-64">
-              <input 
-                type="text" 
-                placeholder="Search products..." 
-                className="w-full bg-card border border-white/10 text-white pl-10 pr-4 py-3 rounded-sm focus:outline-none focus:border-primary"
+
+          <div className="flex w-full md:w-auto gap-3">
+            <div className={`relative w-full md:w-56 transition-all duration-300 ${searchFocused ? 'md:w-72' : ''}`}>
+              <input
+                type="text"
+                placeholder="Search..."
+                className="w-full bg-white border border-black/[0.08] text-heading pl-10 pr-4 py-2.5 rounded-xl focus:outline-none focus:border-primary/40 focus:shadow-sm text-sm transition-all"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setSearchFocused(true)}
+                onBlur={() => setSearchFocused(false)}
               />
-              <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+              <Search size={15} className={`absolute left-3.5 top-1/2 -translate-y-1/2 transition-colors duration-300 ${searchFocused ? 'text-primary' : 'text-muted'}`} strokeWidth={1.5} />
             </div>
-            <button 
-              className="md:hidden bg-card border border-white/10 text-white px-4 py-3 rounded-sm flex items-center justify-center"
+            <button
+              className="md:hidden bg-white border border-black/[0.08] text-body px-3.5 py-2.5 rounded-xl flex items-center justify-center"
               onClick={() => setIsFilterOpen(!isFilterOpen)}
             >
-              <Filter size={18} />
+              <SlidersHorizontal size={16} strokeWidth={1.5} />
             </button>
           </div>
         </div>
 
         <div className="flex flex-col md:flex-row gap-8">
-          {/* Filters Sidebar - Desktop */}
-          <div className="hidden md:block w-64 flex-shrink-0">
-            <div className="sticky top-32">
-              <h3 className="text-white font-bold uppercase tracking-wider mb-4">Categories</h3>
-              <ul className="space-y-2">
+          <div className="hidden md:block w-52 flex-shrink-0">
+            <div className="sticky top-28">
+              <h3 className="text-muted font-semibold uppercase tracking-wider text-[11px] mb-4">Categories</h3>
+              <ul className="space-y-1">
                 {categories.map(cat => (
                   <li key={cat}>
-                    <button 
+                    <button
                       onClick={() => setSelectedCategory(cat)}
-                      className={`text-left w-full uppercase tracking-wider text-sm py-2 px-3 rounded-sm transition-colors ${selectedCategory.toLowerCase() === cat.toLowerCase() ? 'bg-primary text-white font-bold' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                      className={`text-left w-full text-sm py-2 px-3 rounded-xl transition-all duration-200 ${
+                        selectedCategory.toLowerCase() === cat.toLowerCase()
+                          ? 'bg-primary/10 text-primary font-medium'
+                          : 'text-body/60 hover:text-heading hover:bg-surface-2'
+                      }`}
                     >
                       {cat}
                     </button>
@@ -84,26 +86,31 @@ const Products = () => {
             </div>
           </div>
 
-          {/* Filters - Mobile */}
           <AnimatePresence>
             {isFilterOpen && (
-              <motion.div 
+              <motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 className="md:hidden overflow-hidden"
               >
-                <div className="bg-card p-4 rounded-sm border border-white/10 mb-6">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-white font-bold uppercase tracking-wider">Categories</h3>
-                    <button onClick={() => setIsFilterOpen(false)} className="text-gray-400"><X size={20} /></button>
+                <div className="bg-white p-4 rounded-xl border border-black/[0.06] mb-6 shadow-card">
+                  <div className="flex justify-between items-center mb-3">
+                    <h3 className="text-muted font-semibold uppercase tracking-wider text-[11px]">Categories</h3>
+                    <button onClick={() => setIsFilterOpen(false)} className="text-muted hover:text-heading">
+                      <X size={16} />
+                    </button>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {categories.map(cat => (
-                      <button 
+                      <button
                         key={cat}
                         onClick={() => { setSelectedCategory(cat); setIsFilterOpen(false); }}
-                        className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-sm ${selectedCategory.toLowerCase() === cat.toLowerCase() ? 'bg-primary text-white' : 'bg-white/5 text-gray-400'}`}
+                        className={`px-3.5 py-1.5 text-xs font-medium rounded-full transition-colors ${
+                          selectedCategory.toLowerCase() === cat.toLowerCase()
+                            ? 'bg-primary text-white'
+                            : 'bg-surface-2 text-body/60 hover:text-heading'
+                        }`}
                       >
                         {cat}
                       </button>
@@ -114,26 +121,22 @@ const Products = () => {
             )}
           </AnimatePresence>
 
-          {/* Product Grid */}
           <div className="flex-1">
             {products.length > 0 ? (
-              <motion.div 
-                layout
-                className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6"
-              >
-                {products.map(product => (
-                  <motion.div layout key={product.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <motion.div layout className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                {products.map((product, i) => (
+                  <motion.div layout key={product.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ delay: i * 0.03 }}>
                     <ProductCard product={product} />
                   </motion.div>
                 ))}
               </motion.div>
             ) : (
               <div className="text-center py-20">
-                <h3 className="text-2xl font-bold text-white mb-2">No products found</h3>
-                <p className="text-gray-400">Try adjusting your search or filters.</p>
-                <button 
-                  onClick={() => {setSearchQuery(''); setSelectedCategory('All');}}
-                  className="mt-6 bg-primary text-white px-6 py-3 font-bold uppercase tracking-wider rounded-sm"
+                <h3 className="text-xl font-display font-bold text-heading mb-2">No products found</h3>
+                <p className="text-muted text-sm mb-6">Try adjusting your search or filters.</p>
+                <button
+                  onClick={() => { setSearchQuery(''); setSelectedCategory('All'); }}
+                  className="bg-primary hover:bg-primary-dark text-white px-5 py-2.5 font-medium text-sm rounded-xl transition-colors"
                 >
                   Clear Filters
                 </button>

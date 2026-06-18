@@ -14,132 +14,139 @@ const Contact = () => {
 
   return (
     <div className="pt-24 pb-16 min-h-screen">
-      <div className="container mx-auto px-4 md:px-8">
-        
-        <div className="text-center mb-16 max-w-3xl mx-auto">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+      <div className="container mx-auto px-5 md:px-8">
+
+        <div className="text-center mb-14 max-w-2xl mx-auto">
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-6xl font-black uppercase tracking-tighter text-white mb-6"
+            transition={{ duration: 0.5 }}
+            className="font-display text-3xl md:text-5xl font-bold tracking-tight text-heading mb-4"
           >
-            Get In Touch
+            Get in touch
           </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-gray-400 text-lg"
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.15, duration: 0.5 }}
+            className="text-body text-sm md:text-base leading-relaxed"
           >
-            Have a question about our products, an order, or just want to say hello? We're here for you.
+            Questions about products, orders, or anything else? We're here for you.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 mb-20 md:mb-28">
           {/* Contact Form */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-card p-8 rounded-sm border border-white/5"
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="bg-white p-6 md:p-8 rounded-2xl shadow-card"
           >
-            <h2 className="text-2xl font-black uppercase tracking-tighter text-white mb-6">Send a Message</h2>
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <h2 className="font-display text-xl font-bold text-heading mb-6">Send a message</h2>
+            <form className="space-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-gray-400 text-xs uppercase tracking-wider mb-2">First Name</label>
-                  <input type="text" className="w-full bg-background border border-white/10 text-white px-4 py-3 rounded-sm focus:outline-none focus:border-primary" />
+                  <label className="block text-muted text-[11px] uppercase tracking-wider mb-1.5">First Name</label>
+                  <input type="text" className="w-full bg-surface-2 border border-black/[0.06] text-heading px-4 py-2.5 rounded-xl focus:outline-none focus:border-primary/40 focus:shadow-sm text-sm transition-all" />
                 </div>
                 <div>
-                  <label className="block text-gray-400 text-xs uppercase tracking-wider mb-2">Last Name</label>
-                  <input type="text" className="w-full bg-background border border-white/10 text-white px-4 py-3 rounded-sm focus:outline-none focus:border-primary" />
+                  <label className="block text-muted text-[11px] uppercase tracking-wider mb-1.5">Last Name</label>
+                  <input type="text" className="w-full bg-surface-2 border border-black/[0.06] text-heading px-4 py-2.5 rounded-xl focus:outline-none focus:border-primary/40 focus:shadow-sm text-sm transition-all" />
                 </div>
               </div>
               <div>
-                <label className="block text-gray-400 text-xs uppercase tracking-wider mb-2">Email Address</label>
-                <input type="email" className="w-full bg-background border border-white/10 text-white px-4 py-3 rounded-sm focus:outline-none focus:border-primary" />
+                <label className="block text-muted text-[11px] uppercase tracking-wider mb-1.5">Email</label>
+                <input type="email" className="w-full bg-surface-2 border border-black/[0.06] text-heading px-4 py-2.5 rounded-xl focus:outline-none focus:border-primary/40 focus:shadow-sm text-sm transition-all" />
               </div>
               <div>
-                <label className="block text-gray-400 text-xs uppercase tracking-wider mb-2">Subject</label>
-                <input type="text" className="w-full bg-background border border-white/10 text-white px-4 py-3 rounded-sm focus:outline-none focus:border-primary" />
+                <label className="block text-muted text-[11px] uppercase tracking-wider mb-1.5">Subject</label>
+                <input type="text" className="w-full bg-surface-2 border border-black/[0.06] text-heading px-4 py-2.5 rounded-xl focus:outline-none focus:border-primary/40 focus:shadow-sm text-sm transition-all" />
               </div>
               <div>
-                <label className="block text-gray-400 text-xs uppercase tracking-wider mb-2">Message</label>
-                <textarea rows="4" className="w-full bg-background border border-white/10 text-white px-4 py-3 rounded-sm focus:outline-none focus:border-primary resize-none"></textarea>
+                <label className="block text-muted text-[11px] uppercase tracking-wider mb-1.5">Message</label>
+                <textarea rows="4" className="w-full bg-surface-2 border border-black/[0.06] text-heading px-4 py-2.5 rounded-xl focus:outline-none focus:border-primary/40 focus:shadow-sm text-sm transition-all resize-none"></textarea>
               </div>
-              <button className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 px-8 rounded-sm uppercase tracking-wider transition-colors flex items-center justify-center gap-2">
-                Send Message <Send size={18} />
+              <button className="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30">
+                Send Message <Send size={15} strokeWidth={1.5} />
               </button>
             </form>
           </motion.div>
 
           {/* Contact Info & Map */}
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="flex flex-col gap-8"
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="flex flex-col gap-5"
           >
-            <div className="bg-primary/10 border border-primary/20 p-8 rounded-sm">
-               <h3 className="text-xl font-black uppercase tracking-tighter text-white mb-6">Contact Information</h3>
-               <ul className="space-y-6 text-gray-300">
-                  <li className="flex items-start">
-                    <MapPin size={24} className="text-primary mr-4 flex-shrink-0" />
-                    <div>
-                      <strong className="block text-white mb-1">India Headquarters</strong>
-                      Nexus Sports, 1st Floor, Indiranagar<br/>Bengaluru, Karnataka 560038, India
-                    </div>
-                  </li>
-                  <li className="flex items-center">
-                    <Phone size={24} className="text-primary mr-4 flex-shrink-0" />
-                    <div>
-                      <strong className="block text-white mb-1">Phone Support</strong>
-                      +91 800 123 4567 <span className="text-sm text-gray-500">(24/7)</span>
-                    </div>
-                  </li>
-                  <li className="flex items-center">
-                    <Mail size={24} className="text-primary mr-4 flex-shrink-0" />
-                    <div>
-                      <strong className="block text-white mb-1">Email Us</strong>
-                      support@nexussports.com
-                    </div>
-                  </li>
-               </ul>
+            <div className="bg-white shadow-card p-6 md:p-8 rounded-2xl">
+              <h3 className="font-display text-lg font-bold text-heading mb-6">Contact information</h3>
+              <ul className="space-y-5">
+                <li className="flex items-start gap-3.5">
+                  <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <MapPin size={16} className="text-primary" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <strong className="block text-heading text-sm font-medium mb-0.5">India Headquarters</strong>
+                    <span className="text-body text-sm leading-relaxed">Nexus Sports, 1st Floor, Indiranagar<br/>Bengaluru, Karnataka 560038</span>
+                  </div>
+                </li>
+                <li className="flex items-center gap-3.5">
+                  <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Phone size={16} className="text-primary" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <strong className="block text-heading text-sm font-medium mb-0.5">Phone Support</strong>
+                    <span className="text-body text-sm">+91 800 123 4567 <span className="text-muted">(24/7)</span></span>
+                  </div>
+                </li>
+                <li className="flex items-center gap-3.5">
+                  <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Mail size={16} className="text-primary" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <strong className="block text-heading text-sm font-medium mb-0.5">Email</strong>
+                    <span className="text-body text-sm">support@nexussports.com</span>
+                  </div>
+                </li>
+              </ul>
             </div>
 
-            {/* Simulated Map */}
-            <div className="flex-1 bg-card border border-white/5 rounded-sm overflow-hidden relative min-h-[300px]">
-              <div className="absolute inset-0 bg-black/50 z-10 flex items-center justify-center pointer-events-none">
-                 <div className="bg-primary text-white font-bold py-2 px-4 rounded-sm shadow-lg flex items-center gap-2">
-                   <MapPin size={18} /> Nexus HQ
-                 </div>
+            {/* Map */}
+            <div className="flex-1 bg-white shadow-card rounded-2xl overflow-hidden relative min-h-[250px]">
+              <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+                <div className="bg-white/90 backdrop-blur-sm text-heading font-medium py-2 px-4 rounded-xl shadow-elevated flex items-center gap-1.5 text-sm border border-black/[0.06]">
+                  <MapPin size={14} className="text-primary" /> Nexus HQ
+                </div>
               </div>
-              <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop" alt="Map Location" className="w-full h-full object-cover grayscale opacity-50" />
+              <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop" alt="Map Location" className="w-full h-full object-cover grayscale opacity-60" />
             </div>
           </motion.div>
         </div>
 
         {/* FAQs */}
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-black uppercase tracking-tighter text-white mb-8 text-center">Frequently Asked Questions</h2>
-          <div className="space-y-4">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-display text-xl md:text-2xl font-bold tracking-tight text-heading mb-8 text-center">Frequently asked questions</h2>
+          <div className="space-y-3">
             {faqs.map((faq, idx) => (
-              <div key={idx} className="bg-card border border-white/5 rounded-sm overflow-hidden">
-                <button 
-                  className="w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none"
+              <div key={idx} className="bg-white shadow-sm hover:shadow-card transition-shadow duration-300 rounded-2xl overflow-hidden border border-black/[0.04]">
+                <button
+                  className="w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none group"
                   onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
                 >
-                  <span className="text-white font-bold">{faq.question}</span>
-                  <ChevronDown size={20} className={`text-primary transition-transform duration-300 ${activeFaq === idx ? 'rotate-180' : ''}`} />
+                  <span className="text-heading font-medium text-sm group-hover:text-primary transition-colors">{faq.question}</span>
+                  <ChevronDown size={16} className={`text-muted transition-transform duration-300 flex-shrink-0 ml-4 ${activeFaq === idx ? 'rotate-180 text-primary' : ''}`} />
                 </button>
                 <AnimatePresence>
                   {activeFaq === idx && (
-                    <motion.div 
+                    <motion.div
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.25, ease: 'easeOut' }}
                     >
-                      <div className="px-6 pb-4 text-gray-400">
+                      <div className="px-6 pb-5 text-body text-sm leading-relaxed">
                         {faq.answer}
                       </div>
                     </motion.div>

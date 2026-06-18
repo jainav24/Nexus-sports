@@ -5,33 +5,28 @@ const LoadingScreen = () => {
   return (
     <div className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center">
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
         className="flex flex-col items-center"
       >
-        <div className="text-4xl font-bold tracking-tighter text-white uppercase flex items-center gap-2 mb-8">
-          <span className="text-primary">Nexus</span> Sports
-        </div>
-        
-        {/* Animated Progress Bar */}
-        <div className="w-64 h-1 bg-white/10 rounded-full overflow-hidden mb-4">
+        <motion.div
+          animate={{ opacity: [0.4, 1, 0.4] }}
+          transition={{ duration: 2, ease: 'easeInOut', repeat: Infinity }}
+          className="text-4xl font-display font-bold tracking-tight uppercase flex items-center gap-1.5 mb-10"
+        >
+          <span className="text-gradient">Nexus</span>
+          <span className="font-light text-heading/60">Sports</span>
+        </motion.div>
+
+        <div className="w-48 h-[2px] bg-black/[0.05] rounded-full overflow-hidden">
           <motion.div
-            initial={{ width: "0%" }}
-            animate={{ width: "100%" }}
-            transition={{ duration: 2, ease: "easeInOut" }}
-            className="h-full bg-primary"
+            initial={{ width: '0%' }}
+            animate={{ width: '100%' }}
+            transition={{ duration: 1.6, ease: [0.25, 0.1, 0.25, 1] }}
+            className="h-full bg-gradient-to-r from-primary/0 via-primary to-primary/0 rounded-full"
           />
         </div>
-        
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="text-gray-400 text-sm tracking-widest uppercase"
-        >
-          Loading Champions Experience...
-        </motion.p>
       </motion.div>
     </div>
   );

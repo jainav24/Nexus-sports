@@ -16,121 +16,81 @@ const CoverflowCarousel = ({ items }) => {
 
   return (
     <div className="relative w-full py-10 flex items-center justify-center min-h-[500px] sm:min-h-[600px] overflow-hidden" style={{ perspective: '1000px' }}>
-      
-      {/* Navigation Buttons */}
-      <button 
+
+      <button
         onClick={handlePrev}
-        className="absolute left-4 sm:left-10 z-50 bg-white/10 hover:bg-white/30 backdrop-blur-md text-white p-3 rounded-full transition-colors flex items-center justify-center border border-white/20"
+        className="absolute left-4 sm:left-10 z-50 w-11 h-11 bg-white/90 hover:bg-white backdrop-blur-md text-heading/50 hover:text-heading rounded-full transition-all duration-300 flex items-center justify-center shadow-md border border-black/[0.04]"
         aria-label="Previous"
       >
-        <ArrowLeft size={24} />
+        <ArrowLeft size={18} strokeWidth={1.5} />
       </button>
 
-      <button 
+      <button
         onClick={handleNext}
-        className="absolute right-4 sm:right-10 z-50 bg-white/10 hover:bg-white/30 backdrop-blur-md text-white p-3 rounded-full transition-colors flex items-center justify-center border border-white/20"
+        className="absolute right-4 sm:right-10 z-50 w-11 h-11 bg-white/90 hover:bg-white backdrop-blur-md text-heading/50 hover:text-heading rounded-full transition-all duration-300 flex items-center justify-center shadow-md border border-black/[0.04]"
         aria-label="Next"
       >
-        <ArrowRight size={24} />
+        <ArrowRight size={18} strokeWidth={1.5} />
       </button>
 
       <div className="relative w-full max-w-[280px] sm:max-w-[340px] h-[400px] sm:h-[480px] flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
         <AnimatePresence initial={false}>
           {items.map((item, index) => {
             const distance = index - currentIndex;
-            
-            // Handle wrapping for infinite feel (optional, but let's keep it simple with fixed distances)
-            // If distance > half of items, maybe wrap it. 
-            // For now, let's just use raw distance.
             let adjustedDistance = distance;
-            
+
             if (Math.abs(distance) > Math.floor(items.length / 2)) {
-               if (distance > 0) {
-                 adjustedDistance = distance - items.length;
-               } else {
-                 adjustedDistance = distance + items.length;
-               }
+              if (distance > 0) adjustedDistance = distance - items.length;
+              else adjustedDistance = distance + items.length;
             }
 
             const isActive = adjustedDistance === 0;
             const isLeft = adjustedDistance < 0;
-            const isRight = adjustedDistance > 0;
             const absDistance = Math.abs(adjustedDistance);
 
-            // Calculate styles based on distance
-            let translateX = 0;
-            let rotateY = 0;
-            let scale = 1;
-            let zIndex = 10 - absDistance;
-            let opacity = 1;
+            let translateX = 0, rotateY = 0, scale = 1, zIndex = 10 - absDistance, opacity = 1;
 
             if (isActive) {
-              translateX = 0;
-              rotateY = 0;
-              scale = 1;
-              opacity = 1;
+              translateX = 0; rotateY = 0; scale = 1; opacity = 1;
             } else {
-              // Adjust these values to match the screenshot's depth and spacing
               translateX = isLeft ? -50 - (absDistance * 30) : 50 + (absDistance * 30);
               rotateY = isLeft ? 35 + (absDistance * 5) : -35 - (absDistance * 5);
               scale = 1 - (absDistance * 0.15);
-              opacity = 1 - (absDistance * 0.2);
-              
-              if (absDistance > 3) {
-                 opacity = 0; // Hide elements too far away
-              }
+              opacity = 1 - (absDistance * 0.25);
+              if (absDistance > 3) opacity = 0;
             }
 
             return (
               <motion.div
                 key={item.id}
                 initial={false}
-                animate={{
-                  x: `${translateX}%`,
-                  rotateY: rotateY,
-                  scale: scale,
-                  zIndex: zIndex,
-                  opacity: opacity,
-                }}
-                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-                className="absolute w-full h-full rounded-2xl overflow-hidden cursor-pointer"
+                animate={{ x: `${translateX}%`, rotateY, scale, zIndex, opacity }}
+                transition={{ duration: 0.5, type: 'spring', stiffness: 200, damping: 28 }}
+                className="absolute w-full h-full rounded-2xl overflow-hidden cursor-pointer shadow-elevated"
                 style={{ transformOrigin: 'center center' }}
-                onClick={() => {
-                  if (!isActive) setCurrentIndex(index);
-                }}
+                onClick={() => { if (!isActive) setCurrentIndex(index); }}
               >
-                <div className="relative w-full h-full bg-card group">
-                  <img 
-                    src={item.image} 
-                    alt={item.name} 
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  {/* Overlay gradient */}
-                  <div className={`absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-60'}`} />
-                  
-                  {/* Content */}
+                <div className="relative w-full h-full bg-surface-2 group">
+                  <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                  <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-60'}`} />
+
                   <div className={`absolute inset-0 p-6 sm:p-8 flex flex-col justify-end transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
-                    <div className="mb-2">
-                      <span className="inline-block bg-primary text-white text-[10px] font-bold px-2 py-1 uppercase rounded-sm tracking-wider">
+                    <div className="mb-2.5">
+                      <span className="inline-block bg-primary text-white text-[10px] font-semibold px-2.5 py-1 uppercase rounded-full tracking-wider shadow-sm">
                         {item.category}
                       </span>
                     </div>
-                    <h3 className="text-white text-3xl sm:text-4xl font-black uppercase tracking-tighter leading-none mb-3">
-                      {item.name.split(' ').map((word, i) => (
-                        <React.Fragment key={i}>
-                          {word}
-                          {i < item.name.split(' ').length - 1 && <br />}
-                        </React.Fragment>
-                      ))}
+                    <h3 className="text-white font-display text-2xl sm:text-3xl font-bold tracking-tight leading-tight mb-3 drop-shadow-md">
+                      {item.name}
                     </h3>
-                    <p className="text-gray-300 text-sm mb-6 max-w-[90%]">
+                    <p className="text-white/60 text-sm mb-5 max-w-[90%] line-clamp-2">
                       {item.description}
                     </p>
-                    <Link 
+                    <Link
                       to={`/product/${item.id}`}
-                      className="text-white font-bold text-sm tracking-wider uppercase flex items-center hover:text-primary transition-colors w-max"
+                      className="text-white/90 hover:text-white font-medium text-xs tracking-wider uppercase flex items-center w-max transition-colors duration-300"
                     >
-                      Explore <ArrowRight size={16} className="ml-2" />
+                      View Details <ArrowRight size={14} className="ml-1.5" />
                     </Link>
                   </div>
                 </div>
@@ -138,6 +98,20 @@ const CoverflowCarousel = ({ items }) => {
             );
           })}
         </AnimatePresence>
+      </div>
+
+      {/* Dot indicators */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
+        {items.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrentIndex(i)}
+            className={`rounded-full transition-all duration-300 ${
+              i === currentIndex ? 'w-6 h-1.5 bg-primary' : 'w-1.5 h-1.5 bg-heading/15 hover:bg-heading/30'
+            }`}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
       </div>
     </div>
   );
